@@ -22,8 +22,9 @@ class POIItem: NSObject, GMUClusterItem {
 }
 
 let kClusterItemCount = 10000
-let kCameraLatitude = -33.8
-let kCameraLongitude = 151.2
+let kCameraLatitude: CLLocationDegrees = 16.0
+let kCameraLongitude: CLLocationDegrees = 106.0
+let kDefaultCameraZoom: Float = 4.0
 
 class MapViewController: UIViewController, GMSMapViewDelegate {
 
@@ -31,8 +32,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   private var clusterManager: GMUClusterManager!
 
   override func loadView() {
-    let camera = GMSCameraPosition.camera(withLatitude: kCameraLatitude,
-      longitude: kCameraLongitude, zoom: 10)
+    let camera = GMSCameraPosition.camera(withLatitude: kCameraLatitude, longitude: kCameraLongitude, zoom: kDefaultCameraZoom)
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     self.view = mapView
   }
@@ -75,14 +75,34 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   /// Randomly generates cluster items within some extent of the camera and adds them to the
   /// cluster manager.
   private func generateClusterItems() {
-    let extent = 0.2
-    for _ in 1...kClusterItemCount {
-      let lat = kCameraLatitude + extent * randomScale()
-      let lng = kCameraLongitude + extent * randomScale()
-      let position = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-      let marker = GMSMarker(position: position)
-      clusterManager.add(marker)
+    
+    IP2LocationService().loadOwnerIP { result in
+      switch result {
+      case .success(let ownerIP):
+        print("duydl: load success: \(ownerIP)")
+        IP2LocationService().getLocationOfIP(ip: ownerIP) { (result) in
+          switch result {
+          case .success(let position):
+            let marker = GMSMarker(position: position)
+            self.clusterManager.add(marker)
+            
+          case .failure(let error):
+            print(error)
+          }
+        }
+      case .failure(let error):
+        print("duydl: load failed: \(error)")
+      }
     }
+    
+//    let extent = 0.2
+//    for _ in 1...kClusterItemCount {
+//      let lat = kCameraLatitude + extent * randomScale()
+//      let lng = kCameraLongitude + extent * randomScale()
+//      let position = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+//      let marker = GMSMarker(position: position)
+//      clusterManager.add(marker)
+//    }
   }
 
   /// Returns a random value between -1.0 and 1.0.
