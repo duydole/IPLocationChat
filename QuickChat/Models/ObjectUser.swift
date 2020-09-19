@@ -33,8 +33,8 @@ class ObjectUser: FireStorageCodable {
   
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(id, forKey: .id)
-    try container.encodeIfPresent(name, forKey: .name)
+    try container.encode(id, forKey: ._id)
+    try container.encodeIfPresent(name, forKey: .username)
     try container.encodeIfPresent(email, forKey: .email)
     try container.encodeIfPresent(profilePicLink, forKey: .profilePicLink)
   }
@@ -44,8 +44,8 @@ class ObjectUser: FireStorageCodable {
   public required convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    id = try container.decode(String.self, forKey: .id)
-    name = try container.decodeIfPresent(String.self, forKey: .name)
+    id = try container.decode(String.self, forKey: ._id)
+    name = try container.decodeIfPresent(String.self, forKey: .username)
     email = try container.decodeIfPresent(String.self, forKey: .email)
     profilePicLink = try container.decodeIfPresent(String.self, forKey: .profilePicLink)
   }
@@ -53,9 +53,9 @@ class ObjectUser: FireStorageCodable {
 
 extension ObjectUser {
   private enum CodingKeys: String, CodingKey {
-    case id
+    case _id
     case email
-    case name
+    case username
     case profilePicLink
   }
 }
