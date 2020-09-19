@@ -10,18 +10,9 @@ import GoogleMaps
 import UIKit
 import GoogleMapsUtils
 
-/// Point of Interest Item which implements the GMUClusterItem protocol.
-class POIItem: NSObject, GMUClusterItem {
-  var position: CLLocationCoordinate2D
-  var name: String!
-  
-  init(position: CLLocationCoordinate2D, name: String) {
-    self.position = position
-    self.name = name
-  }
-}
+typealias LDMapPosition = CLLocationCoordinate2D
 
-let kClusterItemCount = 10000
+let kDebugTotalMarker = 100
 let kCameraLatitude: CLLocationDegrees = 16.0
 let kCameraLongitude: CLLocationDegrees = 106.0
 let kDefaultCameraZoom: Float = 4.0
@@ -55,7 +46,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     clusterManager.setMapDelegate(self)
     
     /// Mark owner location on GoogleMapView
-    markOwnerLocationOnMapView()
+    markRandom()
   }
   
   // MARK: - GMUMapViewDelegate
@@ -72,6 +63,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   }
   
   // MARK: - Private
+  
+  func markRandom() {
+    for position in self.genRandomPositions(count: kDebugTotalMarker) {
+      markOnMapViewWithPosition(position)
+    }
+  }
   
   func markOwnerLocationOnMapView() {
     ip2LocationService.loadOwnerIP { result in
@@ -91,8 +88,24 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }
   }
   
-  func markOnMapViewWithPosition(_ position: CLLocationCoordinate2D) {
+  func markOnMapViewWithPosition(_ position: LDMapPosition) {
     let marker = GMSMarker(position: position)
     marker.map = self.googleMapView
+  }
+  
+  func genRandomPositions(count: Int) -> [LDMapPosition] {
+    var listPosition: [LDMapPosition] = []
+    for _ in 1...count {
+      listPosition.append(LDMapPosition(latitude: self.randomLatitude(), longitude: self.randomLongitude()))
+    }
+    return listPosition
+  }
+  
+  func randomLatitude() -> CLLocationDegrees {
+    return CLLocationDegrees(Int.random(in: -90...90))
+  }
+  
+  func randomLongitude() -> CLLocationDegrees {
+    return CLLocationDegrees(Int.random(in: -180...180))
   }
 }
