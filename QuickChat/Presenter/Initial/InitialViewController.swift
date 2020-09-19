@@ -36,7 +36,7 @@ class InitialViewController: UIViewController {
     if isNotLogined {
       vc = UIStoryboard.initial(storyboard: .auth)
     } else {
-      vc = HomeViewController()
+      vc = UIStoryboard.initial(storyboard: .conversations)
     }
     
     vc.modalPresentationStyle = .fullScreen

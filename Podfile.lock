@@ -228,6 +228,22 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - Google-Maps-iOS-Utils (3.3.0):
+    - Google-Maps-iOS-Utils/Clustering (= 3.3.0)
+    - Google-Maps-iOS-Utils/Geometry (= 3.3.0)
+    - Google-Maps-iOS-Utils/Heatmap (= 3.3.0)
+    - Google-Maps-iOS-Utils/QuadTree (= 3.3.0)
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Clustering (3.3.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Geometry (3.3.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Heatmap (3.3.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/QuadTree (3.3.0):
+    - GoogleMaps
   - GoogleAppMeasurement (6.1.6):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -238,6 +254,11 @@ PODS:
   - GoogleDataTransportCCTSupport (1.2.1):
     - GoogleDataTransport (~> 3.0)
     - nanopb (~> 0.3.901)
+  - GoogleMaps (3.10.0):
+    - GoogleMaps/Maps (= 3.10.0)
+  - GoogleMaps/Base (3.10.0)
+  - GoogleMaps/Maps (3.10.0):
+    - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (6.3.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -289,6 +310,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
+  - Google-Maps-iOS-Utils (~> 3.3.0)
   - Kingfisher
 
 SPEC REPOS:
@@ -306,9 +328,11 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseStorage
+    - Google-Maps-iOS-Utils
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
+    - GoogleMaps
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -331,9 +355,11 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 7acd8c85ce6b8955cedc0b9be17d456473605a93
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   FirebaseStorage: 046abe9ac4e2a1a0e47d72f536490ffa50896632
+  Google-Maps-iOS-Utils: 5481c2c8999a7847424755d777c241c238243c0a
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 67cc56f6280d1bc9d470285e851ec49ee9013dba
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
+  GoogleMaps: 8c080862ff2748ece9929471b30feb56a6c5079d
   GoogleUtilities: 547a86735c6f0ee30ad17e94df4fc21f616b71cb
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
@@ -342,6 +368,6 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
 
-PODFILE CHECKSUM: 46f720711b0ccf5399a792073f4425cb3ba05f5f
+PODFILE CHECKSUM: bb0867c9187a4de6d4923477804d8dc4f2b4e3dd
 
 COCOAPODS: 1.8.4

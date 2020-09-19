@@ -148,18 +148,27 @@ extension ConversationsViewController: ProfileViewControllerDelegate {
 
 //MARK: ContactsPreviewController Delegate
 extension ConversationsViewController: ContactsPreviewControllerDelegate {
-  func contactsPreviewController(didSelect user: ObjectUser) {
+  func contactsPreviewController(didSelect friendUser: ObjectUser) {
     guard let currentID = userManager.currentUserID() else { return }
     let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
-    if let conversation = conversations.filter({$0.userIDs.contains(user.id)}).first {
+    if let conversation = conversations.filter({$0.userIDs.contains(friendUser.id)}).first {
       vc.conversation = conversation
       show(vc, sender: self)
       return
     }
-    let conversation = ObjectConversation()
-    conversation.userIDs.append(contentsOf: [currentID, user.id])
-    conversation.isRead = [currentID: true, user.id: true]
-    vc.conversation = conversation
-    show(vc, sender: self)
+    
+    
+    weak var weakS = self
+    userManager.currentUserData { objectUser in
+      guard let ownerUser = objectUser,
+            let weakSelf = weakS else { return }
+      
+      let conversation = ObjectConversation()
+      conversation.id = "\(ownerUser.name ?? "")_\(friendUser.name ?? "")"  /// ownerName_friendName
+      conversation.userIDs.append(contentsOf: [currentID, friendUser.id])
+      conversation.isRead = [currentID: true, friendUser.id: true]
+      vc.conversation = conversation
+      weakSelf.show(vc, sender: weakSelf)
+    }
   }
 }

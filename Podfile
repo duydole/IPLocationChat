@@ -11,5 +11,6 @@ target 'QuickChat' do
   pod 'Kingfisher'
   pod 'Firebase/Firestore'
   pod 'ALLoadingView'
+  pod 'Google-Maps-iOS-Utils', '~> 3.3.0'
 
 end
