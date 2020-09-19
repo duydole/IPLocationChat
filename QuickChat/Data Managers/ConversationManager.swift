@@ -28,7 +28,7 @@ class ConversationManager {
   
   func currentConversations(_ completion: @escaping CompletionObject<[ObjectConversation]>) {
     guard let userID = UserManager().currentUserID() else { return }
-    let query = FirestoreService.DataQuery(key: "userIDs", value: userID, mode: .contains)
+    let query = FirestoreService.DataQuery(key: "users", value: userID, mode: .contains)
     service.objectWithListener(ObjectConversation.self, parameter: query, reference: .init(location: .conversations)) { results in
       completion(results)
     }

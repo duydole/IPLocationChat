@@ -32,8 +32,8 @@ class ObjectConversation: FireCodable {
   
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(id, forKey: .id)
-    try container.encode(userIDs, forKey: .userIDs)
+    try container.encode(id, forKey: ._id)
+    try container.encode(userIDs, forKey: .users)
     try container.encode(timestamp, forKey: .timestamp)
     try container.encodeIfPresent(lastMessage, forKey: .lastMessage)
     try container.encode(isRead, forKey: .isRead)
@@ -44,8 +44,8 @@ class ObjectConversation: FireCodable {
   public required convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    id = try container.decode(String.self, forKey: .id)
-    userIDs = try container.decode([String].self, forKey: .userIDs)
+    id = try container.decode(String.self, forKey: ._id)
+    userIDs = try container.decode([String].self, forKey: .users)
     timestamp = try container.decode(Int.self, forKey: .timestamp)
     lastMessage = try container.decodeIfPresent(String.self, forKey: .lastMessage)
     isRead = try container.decode([String: Bool].self, forKey: .isRead)
@@ -54,8 +54,8 @@ class ObjectConversation: FireCodable {
 
 extension ObjectConversation {
   private enum CodingKeys: String, CodingKey {
-    case id
-    case userIDs
+    case _id
+    case users
     case timestamp
     case lastMessage
     case isRead
