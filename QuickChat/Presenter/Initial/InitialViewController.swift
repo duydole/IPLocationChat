@@ -30,7 +30,15 @@ class InitialViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    let vc = UIStoryboard.initial(storyboard: UserManager().currentUserID().isNone ? .auth : .conversations)
+    
+    let isNotLogined = UserManager().currentUserID().isNone
+    var vc: UIViewController
+    if isNotLogined {
+      vc = UIStoryboard.initial(storyboard: .auth)
+    } else {
+      vc = HomeViewController()
+    }
+    
     vc.modalPresentationStyle = .fullScreen
     present(vc, animated: true)
   }
