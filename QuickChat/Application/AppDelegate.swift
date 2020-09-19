@@ -22,6 +22,11 @@
 
 
 import UIKit
+import GoogleMaps
+
+// Change this key to a valid key registered with the demo app bundle id.
+let mapsAPIKey = "AIzaSyCHPJjbTdV-BavOsq5cwrBLa3wB03lLu5A"
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     FirestoreService().configure()
+    
+    /// GoogleMap config
+    if mapsAPIKey.isEmpty {
+      fatalError("Please provide an API Key using mapsAPIKey")
+    }
+    GMSServices.provideAPIKey(mapsAPIKey)
+    
     return true
   }
 }

@@ -12,5 +12,6 @@ target 'QuickChat' do
   pod 'Firebase/Firestore'
   pod 'ALLoadingView'
   pod 'Google-Maps-iOS-Utils', '~> 3.3.0'
+  pod 'Alamofire', '~> 5.2'
 
 end
