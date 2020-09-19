@@ -74,6 +74,10 @@ extension AuthViewController {
     view.endEditing(true)
     let user = ObjectUser()
     user.name = name
+    
+    // duydl: hardcode
+    //user.id = name    /// duydl: thay vì autogen id thì lấy username luôn. Hard code vl.
+    
     user.email = email
     user.password = password
     user.profilePic = selectedImage

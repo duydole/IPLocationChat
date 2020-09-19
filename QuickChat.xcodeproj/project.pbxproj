@@ -60,6 +60,7 @@
 		22EDC233226C5B24008F1BBC /* FirestorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EDC232226C5B24008F1BBC /* FirestorageService.swift */; };
 		22EDC235226C5B3D008F1BBC /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EDC234226C5B3D008F1BBC /* FirestoreService.swift */; };
 		5B9ECF6E03F5E624C52B3509 /* Pods_QuickChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1078AA3D2FF8C5707E873E0 /* Pods_QuickChat.framework */; };
+		F28145A4251604B600D884E0 /* IP2LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28145A3251604B600D884E0 /* IP2LocationService.swift */; };
 		F2AD570B2515E4D5009BA8F7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AD570A2515E4D5009BA8F7 /* HomeViewController.swift */; };
 		F2B0C5EB25148A6A00BEAFF2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2B0C5EA25148A6900BEAFF2 /* GoogleService-Info.plist */; };
 		F2DBC7F12515FA0B0060864F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBC7F02515FA0B0060864F /* MapViewController.swift */; };
@@ -124,6 +125,7 @@
 		64442DBDEF6A70CFEE9331D6 /* Pods-QuickChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.debug.xcconfig"; path = "Target Support Files/Pods-QuickChat/Pods-QuickChat.debug.xcconfig"; sourceTree = "<group>"; };
 		9226BB5F97214501430FF2E8 /* Pods-QuickChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.release.xcconfig"; path = "Target Support Files/Pods-QuickChat/Pods-QuickChat.release.xcconfig"; sourceTree = "<group>"; };
 		C1078AA3D2FF8C5707E873E0 /* Pods_QuickChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F28145A3251604B600D884E0 /* IP2LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IP2LocationService.swift; sourceTree = "<group>"; };
 		F2AD570A2515E4D5009BA8F7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F2B0C5EA25148A6900BEAFF2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F2DBC7F02515FA0B0060864F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				22EDC232226C5B24008F1BBC /* FirestorageService.swift */,
 				22EDC234226C5B3D008F1BBC /* FirestoreService.swift */,
 				22D7057522703E3A00953354 /* DateService.swift */,
+				F28145A3251604B600D884E0 /* IP2LocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				22124CCB226CC513009800D4 /* MessageManager.swift in Sources */,
 				2281D14F2272009B0023F5B2 /* CLLocationCoordinateExtension.swift in Sources */,
 				22DE3D14234353E90062B9F7 /* UIFontExtension.swift in Sources */,
+				F28145A4251604B600D884E0 /* IP2LocationService.swift in Sources */,
 				22EDC227226C58E4008F1BBC /* UIViewExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
