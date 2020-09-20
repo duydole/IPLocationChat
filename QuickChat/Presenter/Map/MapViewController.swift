@@ -119,6 +119,38 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     let marker = self.createMarkerFromPosition(position, color)
     marker.map = self.googleMapView
   }
+}
+
+// MARK: - Conversations
+
+extension MapViewController {
+  
+  func fetchConversations() {
+    manager.currentConversations {[weak self] conversations in
+      self?.conversations = conversations.sorted(by: {$0.timestamp > $1.timestamp})
+    }
+  }
+  
+  func fetchProfile() {
+    userManager.currentUserData {[weak self] user in
+      self?.currentUser = user
+      
+      /// Update ownerMarker after fetch done currentUser
+      if let urlString = user?.profilePicLink {
+        self?.updateOwnerMarkerIconWithUrl(url: urlString)
+      }
+    }
+  }
+  
+  func updateOwnerMarkerIconWithUrl(url: String) {
+    (self.ownerMarker.iconView as! UIImageView).setImage(url: URL(string: url))
+  }
+
+}
+
+// MARK: - Helper
+
+extension MapViewController {
   
   func createMarkerFromPosition(_ position: LDMapPosition, _ color: UIColor) -> GMSMarker {
     let marker = GMSMarker(position: position)
@@ -144,36 +176,4 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     return CLLocationDegrees(Int.random(in: -180...180))
   }
   
-  // MARK: - Conversations
-  
-  func fetchConversations() {
-    manager.currentConversations {[weak self] conversations in
-      self?.conversations = conversations.sorted(by: {$0.timestamp > $1.timestamp})
-    }
-  }
-  
-  func fetchProfile() {
-    userManager.currentUserData {[weak self] user in
-      self?.currentUser = user
-      if let urlString = user?.profilePicLink {
-        (self?.ownerMarker.iconView as! UIImageView).setImage(url: URL(string: urlString))
-        
-//        AF.request(urlString).responseImage { (response) in
-//
-//          var avatarImage: UIImage
-//          switch response.result {
-//          case .success(let image):
-//            avatarImage = image.scale(to: CGSize(width: 50, height: 50))!
-//          case .failure(let error):
-//            self?.showAlert(title: "Alert", message: error.localizedDescription, completion: nil)
-//            avatarImage = UIImage(named: defaultAvatarName)!
-//          }
-//
-//          DispatchQueue.main.async {
-//            self?.ownerMarker.icon = avatarImage
-//          }
-//        }
-      }
-    }
-  }
 }

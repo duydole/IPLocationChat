@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
   let goToMapButton = UIButton()
   
   //MARK: Life cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .darkGray
