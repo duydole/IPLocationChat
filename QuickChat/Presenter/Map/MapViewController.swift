@@ -9,6 +9,8 @@
 import GoogleMaps
 import UIKit
 import GoogleMapsUtils
+import AlamofireImage
+import Alamofire
 
 typealias LDMapPosition = CLLocationCoordinate2D
 
@@ -25,7 +27,10 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   
   private var conversations = [ObjectConversation]()
   private let manager = ConversationManager()
-
+  private var currentUser: ObjectUser?
+  private let userManager = UserManager()
+  private let ownerMarker = GMSMarker()
+  
   override func loadView() {
     /// Setup camera
     let camera = GMSCameraPosition.camera(withLatitude: kCameraLatitude, longitude: kCameraLongitude, zoom: kDefaultCameraZoom)
@@ -38,6 +43,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupGoogleMap()
+    fetchProfile()
     fetchConversations()
   }
   
@@ -51,6 +57,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     
     /// Mark owner location on GoogleMapView
     markRandom()
+    
+    /// Setup ownermarker
+    ownerMarker.icon = GMSMarker.markerImage(with: .red)
+    ownerMarker.map = googleMapView
+    ownerMarker.iconView = UIImageView()
+    ownerMarker.iconView?.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+    ownerMarker.iconView?.layer.cornerRadius = 25.0
+    ownerMarker.iconView?.clipsToBounds = true
+    ownerMarker.tracksViewChanges = true
     markOwnerLocationOnMapView()
   }
   
@@ -89,13 +104,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         self.ip2LocationService.getLocationOfIP(ip: ownerIP) { (result) in
           switch result {
           case .success(let position):
-            self.markOnMapViewWithPosition(position, .red)
+            self.ownerMarker.position = position
           case .failure(let error):
             self.showAlert(title: "Alert", message: error.localizedDescription, completion: nil)
           }
         }
       case .failure(let error):
-        fatalError("Unresolved error: \(error)")
+        self.showAlert(title: "Alert", message: error.localizedDescription, completion: nil)
       }
     }
   }
@@ -137,4 +152,28 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }
   }
   
+  func fetchProfile() {
+    userManager.currentUserData {[weak self] user in
+      self?.currentUser = user
+      if let urlString = user?.profilePicLink {
+        (self?.ownerMarker.iconView as! UIImageView).setImage(url: URL(string: urlString))
+        
+//        AF.request(urlString).responseImage { (response) in
+//
+//          var avatarImage: UIImage
+//          switch response.result {
+//          case .success(let image):
+//            avatarImage = image.scale(to: CGSize(width: 50, height: 50))!
+//          case .failure(let error):
+//            self?.showAlert(title: "Alert", message: error.localizedDescription, completion: nil)
+//            avatarImage = UIImage(named: defaultAvatarName)!
+//          }
+//
+//          DispatchQueue.main.async {
+//            self?.ownerMarker.icon = avatarImage
+//          }
+//        }
+      }
+    }
+  }
 }

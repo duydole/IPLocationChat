@@ -7,3 +7,5 @@
 //
 
 import Foundation
+
+let defaultAvatarName = "profile pic"

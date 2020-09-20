@@ -22,8 +22,17 @@ class IP2LocationService {
       switch response.result {
       case .success(let data):
         if let data = data {
-          let ownerIP = String(decoding: data, as: UTF8.self)
-          completion(.success(ownerIP))
+          do {
+            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+              if let data = json["data"] as? [String: Any] {
+                if let ip = data["ip"] as? String {
+                return completion(.success(ip))
+                }
+              }
+            }
+          } catch let error as NSError {
+            completion(.failure(error))
+          }
         }
       case.failure(let error):
         completion(.failure(error))
