@@ -27,6 +27,6 @@ class HomeViewController: UIViewController {
   @objc private func didTapGoToMapButton() {
     let vc = MapViewController()
     vc.modalPresentationStyle = .fullScreen
-    self.present(vc, animated: true, completion: nil)
+    show(vc, sender: self)
   }
 }

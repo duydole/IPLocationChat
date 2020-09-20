@@ -23,6 +23,9 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   private var clusterManager: GMUClusterManager!
   private var ip2LocationService = IP2LocationService()
   
+  private var conversations = [ObjectConversation]()
+  private let manager = ConversationManager()
+
   override func loadView() {
     /// Setup camera
     let camera = GMSCameraPosition.camera(withLatitude: kCameraLatitude, longitude: kCameraLongitude, zoom: kDefaultCameraZoom)
@@ -34,10 +37,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setup()
+    setupGoogleMap()
+    fetchConversations()
   }
   
-  func setup() {
+  func setupGoogleMap() {
     /// Setup ClusterManager
     let iconGenerator = GMUDefaultClusterIconGenerator()
     let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
@@ -47,6 +51,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     
     /// Mark owner location on GoogleMapView
     markRandom()
+    markOwnerLocationOnMapView()
   }
   
   // MARK: - GMUMapViewDelegate
@@ -58,6 +63,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
       NSLog("Did tap cluster")
       return true
     }
+    
+    let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
+    vc.conversation = conversations[0]
+    vc.modalPresentationStyle = .fullScreen
+    manager.markAsRead(conversations[0])
+    show(vc, sender: self)
+    
     NSLog("Did tap marker")
     return false
   }
@@ -66,7 +78,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   
   func markRandom() {
     for position in self.genRandomPositions(count: kDebugTotalMarker) {
-      markOnMapViewWithPosition(position)
+      markOnMapViewWithPosition(position, .blue)
     }
   }
   
@@ -77,7 +89,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         self.ip2LocationService.getLocationOfIP(ip: ownerIP) { (result) in
           switch result {
           case .success(let position):
-            self.markOnMapViewWithPosition(position)
+            self.markOnMapViewWithPosition(position, .red)
           case .failure(let error):
             fatalError("Unresolved error: \(error)")
           }
@@ -88,9 +100,17 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }
   }
   
-  func markOnMapViewWithPosition(_ position: LDMapPosition) {
-    let marker = GMSMarker(position: position)
+  func markOnMapViewWithPosition(_ position: LDMapPosition, _ color: UIColor) {
+    let marker = self.createMarkerFromPosition(position, color)
     marker.map = self.googleMapView
+  }
+  
+  func createMarkerFromPosition(_ position: LDMapPosition, _ color: UIColor) -> GMSMarker {
+    let marker = GMSMarker(position: position)
+    marker.icon = GMSMarker.markerImage(with: color)
+    //marker.title = "This is title"
+    
+    return marker
   }
   
   func genRandomPositions(count: Int) -> [LDMapPosition] {
@@ -108,4 +128,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   func randomLongitude() -> CLLocationDegrees {
     return CLLocationDegrees(Int.random(in: -180...180))
   }
+  
+  // MARK: - Conversations
+  
+  func fetchConversations() {
+    manager.currentConversations {[weak self] conversations in
+      self?.conversations = conversations.sorted(by: {$0.timestamp > $1.timestamp})
+    }
+  }
+  
 }
