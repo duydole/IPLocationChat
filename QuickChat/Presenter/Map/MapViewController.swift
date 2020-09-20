@@ -47,6 +47,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     fetchConversations()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    showNavigationBar(enableShow: true)
+  }
+    
   func setupGoogleMap() {
     /// Setup ClusterManager
     let iconGenerator = GMUDefaultClusterIconGenerator()

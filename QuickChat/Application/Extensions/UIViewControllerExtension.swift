@@ -31,4 +31,8 @@ extension UIViewController {
     }))
     present(alert, animated: true, completion: nil)
   }
+  
+  func showNavigationBar(enableShow: Bool) {
+    navigationController?.navigationBar.isHidden = !enableShow
+  }
 }

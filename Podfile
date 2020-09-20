@@ -14,5 +14,6 @@ target 'QuickChat' do
   pod 'Google-Maps-iOS-Utils', '~> 3.3.0'
   pod 'Alamofire', '~> 5.2'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'SnapKit', '~> 5.0.0'
 
 end

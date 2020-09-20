@@ -306,6 +306,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - SnapKit (5.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
@@ -317,6 +318,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Google-Maps-iOS-Utils (~> 3.3.0)
   - Kingfisher
+  - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
@@ -347,6 +349,7 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - nanopb
+    - SnapKit
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -376,7 +379,8 @@ SPEC CHECKSUMS:
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: b319c05c19e6b9d0c114691327c5e42480933e3b
+PODFILE CHECKSUM: 7449a80b089908fffbead77698731a3f4043c0ed
 
 COCOAPODS: 1.8.4

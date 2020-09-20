@@ -36,12 +36,12 @@ class ObjectMessage: FireStorageCodable {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(id, forKey: .id)
-    try container.encodeIfPresent(message, forKey: .message)
+    try container.encodeIfPresent(message, forKey: .content)
     try container.encodeIfPresent(timestamp, forKey: .timestamp)
-    try container.encodeIfPresent(ownerID, forKey: .ownerID)
+    try container.encodeIfPresent(ownerID, forKey: .sender_id)
     try container.encodeIfPresent(profilePicLink, forKey: .profilePicLink)
     try container.encodeIfPresent(contentType.rawValue, forKey: .contentType)
-    try container.encodeIfPresent(content, forKey: .content)
+    try container.encodeIfPresent(content, forKey: .msgContent)
   }
   
   init() {}
@@ -50,11 +50,11 @@ class ObjectMessage: FireStorageCodable {
     self.init()
     let container = try decoder.container(keyedBy: CodingKeys.self)
     id = try container.decode(String.self, forKey: .id)
-    message = try container.decodeIfPresent(String.self, forKey: .message)
+    message = try container.decodeIfPresent(String.self, forKey: .content)
     timestamp = try container.decodeIfPresent(Int.self, forKey: .timestamp) ?? Int(Date().timeIntervalSince1970)
-    ownerID = try container.decodeIfPresent(String.self, forKey: .ownerID)
+    ownerID = try container.decodeIfPresent(String.self, forKey: .sender_id)
     profilePicLink = try container.decodeIfPresent(String.self, forKey: .profilePicLink)
-    content = try container.decodeIfPresent(String.self, forKey: .content)
+    content = try container.decodeIfPresent(String.self, forKey: .msgContent)
     if let contentTypeValue = try container.decodeIfPresent(Int.self, forKey: .contentType) {
       contentType = ContentType(rawValue: contentTypeValue) ?? ContentType.unknown
     }
@@ -64,12 +64,12 @@ class ObjectMessage: FireStorageCodable {
 extension ObjectMessage {
   private enum CodingKeys: String, CodingKey {
     case id
-    case message
+    case content      /// đổi từ message -> content
     case timestamp
-    case ownerID
+    case sender_id
     case profilePicLink
     case contentType
-    case content
+    case msgContent /// tên cũ là content, do web dùng "content"  để lưu "text" nên đổi "message" -> "content", "content" -> "msgContent". Phức tạp vl.
   }
   
   enum ContentType: Int {

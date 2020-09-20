@@ -160,11 +160,12 @@ extension ConversationsViewController: ContactsPreviewControllerDelegate {
     
     weak var weakS = self
     userManager.currentUserData { objectUser in
-      guard let ownerUser = objectUser,
+      guard let _  = objectUser,
             let weakSelf = weakS else { return }
       
       let conversation = ObjectConversation()
-      conversation.id = "\(ownerUser.name ?? "")_\(friendUser.name ?? "")"  /// ownerName_friendName
+      // bỏ đoạn setid của Conversation thàn doleduy_nam
+      //conversation.id = "\(ownerUser.name ?? "")_\(friendUser.name ?? "")"  /// ownerName_friendName
       conversation.userIDs.append(contentsOf: [currentID, friendUser.id])
       conversation.isRead = [currentID: true, friendUser.id: true]
       vc.conversation = conversation

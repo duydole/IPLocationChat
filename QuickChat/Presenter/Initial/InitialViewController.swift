@@ -36,7 +36,7 @@ class InitialViewController: UIViewController {
     if isNotLogined {
       vc = UIStoryboard.initial(storyboard: .auth)
     } else {
-//      vc = UIStoryboard.initial(storyboard: .conversations)
+      //vc = UIStoryboard.initial(storyboard: .conversations)
       let homeVc = HomeViewController()
       vc = UINavigationController(rootViewController: homeVc)
     }
