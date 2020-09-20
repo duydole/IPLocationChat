@@ -91,7 +91,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
           case .success(let position):
             self.markOnMapViewWithPosition(position, .red)
           case .failure(let error):
-            fatalError("Unresolved error: \(error)")
+            self.showAlert(title: "Alert", message: error.localizedDescription, completion: nil)
           }
         }
       case .failure(let error):
